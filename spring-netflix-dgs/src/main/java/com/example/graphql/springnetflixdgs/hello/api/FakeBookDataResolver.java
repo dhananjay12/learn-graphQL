@@ -31,7 +31,7 @@ public class FakeBookDataResolver {
                 )).collect(Collectors.toList());
     }
 
-    @DgsQuery(field = "booksByReleased")
+    @DgsQuery(field = DgsConstants.QUERY.BooksByReleased)
             public List<Book> getBooksByReleased(DataFetchingEnvironment dataFetchingEnvironment) {
         var releasedMap = (Map<String, Object>) dataFetchingEnvironment.getArgument("releasedInput");
         var releasedInput = ReleaseHistoryInput.newBuilder()
@@ -46,7 +46,7 @@ public class FakeBookDataResolver {
 
     private boolean matchReleaseHistory(ReleaseHistoryInput input, ReleaseHistory element) {
         return input.getPrintedEdition().equals(element.getPrintedEdition())
-                && input.getYear() == element.getYear();
+                && input.getYear().equals(element.getYear());
     }
 
 }
