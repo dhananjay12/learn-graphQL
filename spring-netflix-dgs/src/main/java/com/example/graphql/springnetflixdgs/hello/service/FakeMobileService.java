@@ -3,10 +3,14 @@ package com.example.graphql.springnetflixdgs.hello.service;
 import com.example.graphql.generated.types.Address;
 import com.example.graphql.generated.types.Author;
 import com.example.graphql.generated.types.MobileApp;
+import com.example.graphql.generated.types.MobileAppCategory;
 import com.github.javafaker.Faker;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.context.annotation.Configuration;
 
@@ -24,7 +28,7 @@ public class FakeMobileService {
     }
 
     @PostConstruct
-    private void postConstruct() {
+    private void postConstruct() throws MalformedURLException {
         for (int i = 0; i < 20; i++) {
             var addresses = new ArrayList<Address>();
             var author = Author.newBuilder().addresses(addresses)
@@ -35,6 +39,11 @@ public class FakeMobileService {
                     .name(faker.app().name())
                     .author(author).version(faker.app().version())
                     .platform(randomMobileAppPlatform())
+                    .appId(UUID.randomUUID().toString())
+                    .releaseDate(LocalDate.now().minusDays(faker.random().nextInt(365)))
+                    .downloaded(faker.number().numberBetween(1, 1_500_000))
+                    .homepage(new URL("https://" + faker.internet().url()))
+                    .category(MobileAppCategory.values()[faker.random().nextInt(MobileAppCategory.values().length)])
                     .build();
 
             for (int j = 0; j < ThreadLocalRandom.current().nextInt(1, 3); j++) {

@@ -88,6 +88,11 @@
 					<schemaPaths>
 						<path>src/main/resources/schema</path>
 					</schemaPaths>
+					<typeMapping>
+						<Date>java.time.LocalDate</Date>
+						<NonNegativeInt>java.lang.Integer</NonNegativeInt>
+						<Url>java.net.URL</Url>
+					</typeMapping>
 					<generateBoxedTypes>true</generateBoxedTypes>
 					<writeToFiles>true</writeToFiles>
 				</configuration>
